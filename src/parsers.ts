@@ -45,5 +45,29 @@ function concat(parser1: Parser<string>, parser2: Parser<string>, ...parsers: Pa
     };
 }
 
+function alt(parser1: Parser<string>, parser2: Parser<string>, ...parsers: Parser<string>[]): Parser<string> {
+    return (input: Input): Result<string> => {
+        let result;
+        parsers.unshift(parser1, parser2);
 
-export { tag, concat };
+        for (let parser of parsers) {
+            result = parser(input);
+
+            switch (result.kind) {
+                case "done":
+                    return result;
+
+                case "error":
+                    break;
+            }
+        }
+
+        return result;
+    };
+}
+
+export {
+    tag,
+    concat,
+    alt
+};
