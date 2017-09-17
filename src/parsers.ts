@@ -24,10 +24,9 @@ export function tag(tag: string): Parser<string> {
 export function concat(parser1: Parser<string>, parser2: Parser<string>, ...parsers: Parser<string>[]): Parser<string> {
     return (input: Input): Result<string> => {
         let result = parser1(input);
+        let parserI;
 
         parsers.unshift(parser2);
-
-        let parserI;
 
         while (parserI = parsers.shift()) {
             switch (result.kind) {
