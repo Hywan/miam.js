@@ -54,5 +54,9 @@ describe("StringSlice", () => {
         it("should fail when right operand is empty", () => {
             assert(!subject.startsWith(""));
         });
+
+        it("should succeed", () => {
+            assert(subject.startsWith("abc"));
+        })
     });
 });
