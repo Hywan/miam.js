@@ -31,6 +31,10 @@ class StringSlice {
     }
 
     startsWith(prefix: string): boolean {
+        if (0 === prefix.length) {
+            return false;
+        }
+
         return prefix === this.value.borrowed.substr(this.offset, prefix.length);
     }
 }
