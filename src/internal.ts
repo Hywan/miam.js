@@ -49,9 +49,11 @@ interface Err {
 }
 
 type ErrKind =
-    ErrKind_Tag;
+    ErrKind_Tag
+  | ErrKind_Regex;
 
 interface ErrKind_Tag { kind: "tag" }
+interface ErrKind_Regex { kind: "regex" }
 
 type Result<T> = Done<T> | Err;
 
@@ -68,6 +70,7 @@ export {
     Err,
     ErrKind,
     ErrKind_Tag,
+    ErrKind_Regex,
     Result,
     Parser
 };

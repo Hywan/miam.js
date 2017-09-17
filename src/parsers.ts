@@ -66,8 +66,36 @@ function alt(parser1: Parser<string>, parser2: Parser<string>, ...parsers: Parse
     };
 }
 
+function regex(regex: RegExp): Parser<string> {
+    return (input: Input): Result<string> => {
+        const regexWithOffset = new RegExp(
+            "^.{" + input.offset + "}" +
+            "(" + regex.source + ")"
+        );
+
+        let match = regexWithOffset.exec(input.value.borrowed);
+
+        if (match) {
+            return {
+                kind: "done",
+                input: input.splitsAt(input.offset + match[1].length),
+                output: match[1]
+            };
+        }
+
+        return {
+            kind: "error",
+            error: {
+                kind: "regex"
+            }
+        }
+    };
+}
+
+
 export {
     tag,
     concat,
-    alt
+    alt,
+    regex
 };
