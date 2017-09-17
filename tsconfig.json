@@ -7,7 +7,7 @@
         "strictNullChecks": true,
         "pretty": true,
         "sourceMap": false,
-        "outDir": "dist/",
+        "outDir": "dist/"
     },
     "files": [
         "src/index.ts"

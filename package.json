@@ -5,7 +5,8 @@
   "main": "dist/index.js",
   "scripts": {
     "prepublish": "tsc --project .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "pretest": "tsc --pretty --module commonjs test/unit/*.ts",
+    "test": "mocha test/unit/"
   },
   "repository": {
     "type": "git",
@@ -22,10 +23,12 @@
   },
   "homepage": "https://github.com/Hywan/miam.js#readme",
   "dependencies": {
-    "@types/mocha": "^2.2.43",
     "typescript": "^2.5.2"
   },
   "devDependencies": {
+    "@types/chai": "^4.0.4",
+    "@types/mocha": "^2.2.43",
+    "chai": "^4.1.2",
     "mocha": "^3.5.3"
   }
 }
