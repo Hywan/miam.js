@@ -80,7 +80,7 @@ function regex(regex: RegExp): Parser<string> {
 
         let match = regexWithOffset.exec(input.value.borrowed);
 
-        if (match) {
+        if (match && 0 < match[0].length) {
             return {
                 kind: "done",
                 input: input.splitsAt(input.offset + match[1].length),
