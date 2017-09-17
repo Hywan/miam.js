@@ -1,5 +1,5 @@
 class Borrow<T> {
-    constructor(public readonly value: T) {
+    constructor(public readonly borrowed: T) {
     }
 }
 
@@ -7,9 +7,9 @@ class StringSlice {
     public length: number;
     public offset: number;
 
-    constructor(public readonly data: Borrow<string>) {
-        this.data   = data;
-        this.length = data.value.length;
+    constructor(public readonly value: Borrow<string>) {
+        this.value  = value;
+        this.length = value.borrowed.length;
         this.offset = 0;
     }
 
@@ -24,14 +24,14 @@ class StringSlice {
             throw new RangeError("Offset is too big.");
         }
 
-        const out = new StringSlice(this.data); // this.data is a reference, not a copy.
+        const out = new StringSlice(this.value); // `this.value` is a reference, not a copy.
         out.offset = nextOffset;
 
         return out;
     }
 
     startsWith(prefix: string): boolean {
-        return prefix === this.data.value.substr(this.offset, prefix.length);
+        return prefix === this.value.borrowed.substr(this.offset, prefix.length);
     }
 }
 
