@@ -1,9 +1,9 @@
-class Borrow<T> {
+export class Borrow<T> {
     constructor(public readonly value: T) {
     }
 }
 
-class StringSlice {
+export class StringSlice {
     public length: number;
     public offset: number;
 
@@ -35,4 +35,26 @@ class StringSlice {
     }
 }
 
-type Input = StringSlice;
+export type Input = StringSlice;
+
+export interface Done<T> {
+    kind: "done",
+    input: Input;
+    output: T
+}
+
+export interface Err {
+    kind: "error",
+    error: ErrorKind
+}
+
+export interface ErrorKind_Tag { kind: "tag" }
+
+export type ErrorKind =
+    ErrorKind_Tag;
+
+export type Result<T> = Done<T> | Err;
+
+export interface Parser<T> {
+    (input: Input): Result<T>;
+}

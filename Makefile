@@ -1,5 +1,5 @@
 all:
-	tsc --strictNullChecks --pretty --outFile dist/miam.js src/internal.ts src/result.ts src/parsers.ts
+	tsc --strictNullChecks --pretty --outDir dist/ --module commonjs src/*
 
-run:
-	node dist/miam.js
+ex:
+	node examples/simple.js

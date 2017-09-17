@@ -22,15 +22,23 @@ to provide a safe and relatively fast framework to build parsers.
 
 ## Example
 
+See the `examples/` directory for more examples.
+
 ```js
+const { Borrow, StringSlice } = require("./dist/internal.js");
+const { tag, concat }         = require("./dist/parsers.js");
+
+// Create the input of the parser.
 const input = new StringSlice(new Borrow("abcdefghi"));
 
+// Create 3 parsers.
 const abc = tag("abc");
 const def = tag("def");
 const abcdefgh = concat(concat(abc, def), tag("gh"));
 
-console.log(abc(input)); // success
-console.log(def(input)); // error
+// Test them!
+console.log(abc(input));      // success
+console.log(def(input));      // error
 console.log(abcdefgh(input)); // success
 ```
 

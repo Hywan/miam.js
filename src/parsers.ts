@@ -1,4 +1,6 @@
-function tag(tag: string): Parser<string> {
+import {Input, Parser, Result} from "./internal";
+
+export function tag(tag: string): Parser<string> {
     return (input: Input): Result<string> => {
         const nextOffset = input.offset + tag.length;
 
@@ -19,7 +21,7 @@ function tag(tag: string): Parser<string> {
     };
 }
 
-function concat(parser1: Parser<string>, parser2: Parser<string>): Parser<string> {
+export function concat(parser1: Parser<string>, parser2: Parser<string>): Parser<string> {
     return (input: Input): Result<string> => {
         const result = parser1(input);
 
