@@ -54,10 +54,12 @@ interface Err {
 
 type ErrKind =
     ErrKind_Tag
+  | ErrKind_Alt
   | ErrKind_Regex
   | ErrKind_Map;
 
 interface ErrKind_Tag { kind: "tag" }
+interface ErrKind_Alt { kind: "alt" }
 interface ErrKind_Regex { kind: "regex" }
 interface ErrKind_Map { kind: "map" }
 
@@ -76,6 +78,7 @@ export {
     Err,
     ErrKind,
     ErrKind_Tag,
+    ErrKind_Alt,
     ErrKind_Regex,
     ErrKind_Map,
     Result,

@@ -62,7 +62,12 @@ function alt(parser1: Parser<string>, parser2: Parser<string>, ...parsers: Parse
             }
         }
 
-        return result;
+        return {
+            kind: "error",
+            error: {
+                kind: "alt"
+            }
+        };
     };
 }
 
