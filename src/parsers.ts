@@ -21,16 +21,26 @@ export function tag(tag: string): Parser<string> {
     };
 }
 
-export function concat(parser1: Parser<string>, parser2: Parser<string>): Parser<string> {
+export function concat(parser1: Parser<string>, parser2: Parser<string>, ...parsers: Parser<string>[]): Parser<string> {
     return (input: Input): Result<string> => {
-        const result = parser1(input);
+        let result = parser1(input);
 
-        switch (result.kind) {
-            case "done":
-                return parser2(result.input);
+        parsers.unshift(parser2);
 
-            case "error":
-                return result;
+        let parserI;
+
+        while (parserI = parsers.shift()) {
+            switch (result.kind) {
+                case "done":
+                    result = parserI(result.input);
+
+                    break;
+
+                case "error":
+                    return result;
+            }
         }
+
+        return result;
     };
 }
