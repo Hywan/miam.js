@@ -92,10 +92,38 @@ function regex(regex: RegExp): Parser<string> {
     };
 }
 
+interface MapFn<S, T> {
+    (output: S): T
+}
+
+function map<T>(parser: Parser<string>, fn: MapFn<string, T>): Parser<T> {
+    return (input: Input): Result<T> => {
+        let result = parser(input);
+
+        switch (result.kind) {
+            case "done":
+                return {
+                    kind: "done",
+                    input: result.input,
+                    output: fn(result.output)
+                };
+
+        case "error":
+            return {
+                kind: "error",
+                error: {
+                    kind: "map"
+                }
+            };
+        }
+    };
+}
+
 
 export {
     tag,
     concat,
     alt,
-    regex
+    regex,
+    map
 };
