@@ -78,14 +78,15 @@ to provide a safe and relatively fast framework to build parsers.
        <pre><code class="language-js">label_do(
     {
         first: tag("abc"),
-        second: tag("def")},
-        ({first, second}) => {
-            return {
-                head: first,
-                tail: second
-            }
-        )
-     )</code></pre>
+        second: tag("def")
+    },
+    ({first, second}) => {
+        return {
+            head: first,
+            tail: second
+        }
+    )
+)</code></pre>
      </td>
    </tr>
   </tbody>
