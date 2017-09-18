@@ -124,11 +124,53 @@ function map<T>(parser: Parser<string>, fn: MapFn<string, T>): Parser<T> {
     };
 }
 
+interface Labels<T> {
+    [label: string]: Parser<T>;
+}
+
+interface LabelOutputs {
+    [label: string]: any;
+}
+
+interface LabelsFn<T> {
+    (labels: LabelOutputs): T
+}
+
+function label_do<T>(labels: Labels<any>, fn: LabelsFn<T>): Parser<T> {
+    return (input: Input): Result<T> => {
+        let result;
+        let labelledValues: LabelOutputs = {};
+
+        for (let labelName in labels) {
+            let labelParser = labels[labelName];
+            result          = labelParser(input);
+
+            switch (result.kind) {
+                case "done":
+                    labelledValues[labelName] = result.output;
+                    input = result.input;
+
+                    break;
+
+                case "error":
+                    return result;
+            }
+        }
+
+        return {
+            kind: "done",
+            input: input,
+            output: fn(labelledValues)
+        };
+    };
+}
+
 
 export {
     tag,
     concat,
     alt,
     regex,
-    map
+    map,
+    label_do
 };
