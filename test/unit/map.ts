@@ -10,7 +10,7 @@ describe("Parser: map", () => {
 
     describe("parse", () => {
         it("should consume `abc` and return `42`", () => {
-            const abc = map(tag("abc"), _ => 42);
+            const abc = map(tag("abc"), () => 42);
 
             assert.deepEqual(
                 abc(input),
@@ -22,8 +22,21 @@ describe("Parser: map", () => {
             );
         });
 
+        it("should send the consumed value to the mapper", () => {
+            const abc = map(tag("abc"), abc => abc.toUpperCase());
+
+            assert.deepEqual(
+                abc(input),
+                {
+                    kind: "done",
+                    input: input.splitsAt(3),
+                    output: "ABC"
+                }
+            );
+        });
+
         it("should consume `abc` or `def` and return `42`", () => {
-            const abc = map(alt(tag("abc"), tag("def")), _ => 42);
+            const abc = map(alt(tag("abc"), tag("def")), () => 42);
 
             assert.deepEqual(
                 abc(input),
@@ -36,7 +49,7 @@ describe("Parser: map", () => {
         });
 
         it("should fail to consume `xyz`", () => {
-            const xyz = map(tag("xyz"), _ => 42);
+            const xyz = map(tag("xyz"), () => 42);
 
             assert.deepEqual(
                 xyz(input),
@@ -50,7 +63,7 @@ describe("Parser: map", () => {
         });
 
         it("should fail to consume ``", () => {
-            const xyz = map(tag(""), _ => 42);
+            const xyz = map(tag(""), () => 42);
 
             assert.deepEqual(
                 xyz(input),
