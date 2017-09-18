@@ -1,4 +1,4 @@
-import { Borrow, StringSlice, tag, label_do } from "../../src/index";
+import { Borrow, StringSlice, tag, map, alt, label_do } from "../../src/index";
 import { assert } from "chai";
 
 describe("Parser: label_do", () => {
@@ -87,6 +87,37 @@ describe("Parser: label_do", () => {
                     kind: "error",
                     error: {
                         kind: "tag"
+                    }
+                }
+            );
+        });
+
+        it("should label several parsers", () => {
+            const reverseAbc = map(
+                tag("abc"),
+                abc => abc.split("").reverse().join("")
+            );
+            const test = label_do(
+                {
+                    first: reverseAbc,
+                    second: alt(tag("xyz"), tag("def"))
+                },
+                ({first, second}) => {
+                    return {
+                        one: first,
+                        two: second.toUpperCase()
+                    };
+                }
+            );
+
+            assert.deepEqual(
+                test(input),
+                {
+                    kind: "done",
+                    input: input.splitsAt(6),
+                    output: {
+                        one: "cba",
+                        two: "DEF"
                     }
                 }
             );
