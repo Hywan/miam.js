@@ -122,4 +122,4 @@ The `test/unit/` directory contains a nice overview of the API too.
 
 ## Status
 
-Still under development. Please don't use it right now :-).
+Still under development. Please don't use it right now :-). API is under stabilisation.
