@@ -1,7 +1,7 @@
-import { Borrow, StringSlice, tag, opt, label_do } from "../../src/index";
+import { Borrow, StringSlice, Option, tag, opt, label_do } from "../../src/index";
 import { assert } from "chai";
 
-describe("Parser: alt", () => {
+describe("Parser: opt", () => {
     let input: StringSlice;
 
     beforeEach(function () {
@@ -17,10 +17,7 @@ describe("Parser: alt", () => {
                 {
                     kind: "done",
                     input: input.splitsAt(3),
-                    output: {
-                        kind: "some",
-                        value: "abc"
-                    }
+                    output: new Option("abc")
                 }
             );
         });
@@ -33,9 +30,7 @@ describe("Parser: alt", () => {
                 {
                     kind: "done",
                     input: input,
-                    output: {
-                        kind: "none"
-                    }
+                    output: new Option(null)
                 }
             );
         });
@@ -47,13 +42,10 @@ describe("Parser: alt", () => {
                     xyz: opt(tag("xyz"))
                 },
                 ({abc, xyz}) => {
-                    switch (xyz.kind) {
-                        case "some":
-                            return { first: abc, second: xyz.value };
-
-                        case "none":
-                            return { first: abc, second: "foo" };
-                    }
+                    return {
+                        first: abc,
+                        second: xyz.unwrapOr("foo")
+                    };
                 }
             );
 

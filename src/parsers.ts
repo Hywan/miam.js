@@ -80,19 +80,14 @@ function opt(parser: Parser<string>): Parser<Option<string>> {
                 return {
                     kind: "done",
                     input: result.input,
-                    output: {
-                        kind: "some",
-                        value: result.output
-                    }
+                    output: new Option(result.output)
                 };
 
             case "error":
                 return {
                     kind: "done",
                     input: input,
-                    output: {
-                        kind: "none"
-                    }
+                    output: new Option(null)
                 };
         }
     };
