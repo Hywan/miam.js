@@ -1,6 +1,6 @@
 {
   "name": "miam",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "miam.js is a parser combinator framework written in TypeScript",
   "main": "dist/index.js",
   "scripts": {
