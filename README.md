@@ -20,7 +20,8 @@ to provide a safe and relatively fast framework to build parsers.
   * **Speed**: No benchmark yet, but we hope that our approach with
     zero-copy will help to be fast,
   * **Lightweight**: All the type system disappears at compile-time
-    (from TypeScript to JavaScript); the resulting files are small.
+    (from TypeScript to JavaScript); the resulting files are small
+    (≈5Kb).
   
 ## List of parsers
 
