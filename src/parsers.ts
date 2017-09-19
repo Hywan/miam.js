@@ -1,4 +1,4 @@
-import {Input, Parser, Result} from "./internal";
+import { Input, Parser, Result, Option } from "./internal";
 
 function tag(tag: string): Parser<string> {
     return (input: Input): Result<string> => {
@@ -68,6 +68,33 @@ function alt(parser1: Parser<string>, parser2: Parser<string>, ...parsers: Parse
                 kind: "alt"
             }
         };
+    };
+}
+
+function opt(parser: Parser<string>): Parser<Option<string>> {
+    return (input: Input): Result<Option<string>> => {
+        let result = parser(input);
+
+        switch (result.kind) {
+            case "done":
+                return {
+                    kind: "done",
+                    input: result.input,
+                    output: {
+                        kind: "some",
+                        value: result.output
+                    }
+                };
+
+            case "error":
+                return {
+                    kind: "done",
+                    input: input,
+                    output: {
+                        kind: "none"
+                    }
+                };
+        }
     };
 }
 
@@ -170,6 +197,7 @@ export {
     tag,
     concat,
     alt,
+    opt,
     regex,
     map,
     label_do
