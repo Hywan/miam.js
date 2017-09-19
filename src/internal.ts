@@ -65,6 +65,8 @@ interface ErrKind_Map { kind: "map" }
 
 type Result<T> = Done<T> | Err;
 
+type Nullable<T> = T | null;
+
 interface OptionDefaulter<T> {
     (): T
 }
@@ -72,8 +74,6 @@ interface OptionDefaulter<T> {
 interface OptionMapper<T, S> {
     (value: T): S
 }
-
-type Nullable<T> = T | null;
 
 class Option<T> {
     constructor(private readonly value: Nullable<T> = null) { }
