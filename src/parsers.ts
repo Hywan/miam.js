@@ -21,8 +21,8 @@ function tag(tag: string): Parser<string> {
     };
 }
 
-function concat(parser1: Parser<string>, parser2: Parser<string>, ...parsers: Parser<string>[]): Parser<string> {
-    return (input: Input): Result<string> => {
+function concat<T>(parser1: Parser<T>, parser2: Parser<T>, ...parsers: Parser<T>[]): Parser<T> {
+    return (input: Input): Result<T> => {
         let result = parser1(input);
 
         parsers.unshift(parser2);
@@ -45,8 +45,8 @@ function concat(parser1: Parser<string>, parser2: Parser<string>, ...parsers: Pa
     };
 }
 
-function alt(parser1: Parser<string>, parser2: Parser<string>, ...parsers: Parser<string>[]): Parser<string> {
-    return (input: Input): Result<string> => {
+function alt<T>(parser1: Parser<T>, parser2: Parser<T>, ...parsers: Parser<T>[]): Parser<T> {
+    return (input: Input): Result<T> => {
         let result;
         parsers.unshift(parser1, parser2);
 
@@ -71,8 +71,8 @@ function alt(parser1: Parser<string>, parser2: Parser<string>, ...parsers: Parse
     };
 }
 
-function opt(parser: Parser<string>): Parser<Option<string>> {
-    return (input: Input): Result<Option<string>> => {
+function opt<T>(parser: Parser<T>): Parser<Option<T>> {
+    return (input: Input): Result<Option<T>> => {
         let result = parser(input);
 
         switch (result.kind) {
@@ -87,7 +87,7 @@ function opt(parser: Parser<string>): Parser<Option<string>> {
                 return {
                     kind: "done",
                     input: input,
-                    output: new Option<string>()
+                    output: new Option<T>()
                 };
         }
     };
@@ -123,7 +123,7 @@ interface MapFn<S, T> {
     (output: S): T
 }
 
-function map<T>(parser: Parser<string>, fn: MapFn<string, T>): Parser<T> {
+function map<T, S>(parser: Parser<S>, fn: MapFn<S, T>): Parser<T> {
     return (input: Input): Result<T> => {
         let result = parser(input);
 
@@ -187,8 +187,8 @@ function label_do<T>(labels: Labels<any>, fn: LabelsFn<T>): Parser<T> {
     };
 }
 
-function precede<T>(prefix: Parser<string>, subject: Parser<T>): Parser<T> {
-    return (input: Input): Result<T> => {
+function precede<T, S>(prefix: Parser<T>, subject: Parser<S>): Parser<S> {
+    return (input: Input): Result<S> => {
         let prefixResult = prefix(input);
 
         switch (prefixResult.kind) {
@@ -201,7 +201,7 @@ function precede<T>(prefix: Parser<string>, subject: Parser<T>): Parser<T> {
     };
 }
 
-function terminate<T>(subject: Parser<T>, suffix: Parser<string>): Parser<T> {
+function terminate<T, S>(subject: Parser<T>, suffix: Parser<S>): Parser<T> {
     return (input: Input): Result<T> => {
         let subjectResult = subject(input);
 
