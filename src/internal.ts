@@ -65,16 +65,105 @@ interface ErrKind_Map { kind: "map" }
 
 type Result<T> = Done<T> | Err;
 
-interface Some<T> {
-    kind: "some",
-    value: T
+interface OptionDefaulter<T> {
+    (): T
 }
 
-interface None {
-    kind: "none"
+interface OptionMapper<T, S> {
+    (value: T): S
 }
 
-type Option<T> = Some<T> | None;
+class Option<T> {
+    constructor(private readonly value: T = null) { }
+
+    isSome(): boolean {
+        return null !== this.value;
+    }
+
+    isNone(): boolean {
+        return false === this.isSome();
+    }
+
+    unwrapOr<S>(defaultValue: S): T | S {
+        if (true === this.isNone()) {
+            return defaultValue;
+        }
+
+        return this.value;
+    }
+
+    unwrapOrElse<S>(defaulter: OptionDefaulter<S>): T | S {
+        if (true === this.isNone()) {
+            return defaulter();
+        }
+
+        return this.value;
+    }
+
+    map<S>(mapper: OptionMapper<T, S>): Option<S> {
+        if (true === this.isNone()) {
+            return new Option(null);
+        }
+
+        return new Option(mapper(this.value));
+    }
+
+    mapOr<S>(mapper: OptionMapper<T, S>, defaultValue: S): Option<S> {
+        let value;
+
+        if (true === this.isNone()) {
+            value = defaultValue;
+        } else {
+            value = mapper(this.value);
+        }
+
+        return new Option(value);
+    }
+
+    mapOrElse<S>(mapper: OptionMapper<T, S>, defaulter: OptionDefaulter<S>): Option<S> {
+        let value;
+
+        if (true === this.isNone()) {
+            value = defaulter();
+        } else {
+            value = mapper(this.value);
+        }
+
+        return new Option(value);
+    }
+
+    and<S>(rightOption: Option<S>): Option<S> {
+        if (true === this.isNone()) {
+            return new Option(null);
+        }
+
+        return rightOption;
+    }
+
+    andThen<S>(then: OptionMapper<T, Option<S>>): Option<S> {
+        if (true === this.isNone()) {
+            return new Option(null);
+        }
+
+        return then(this.value);
+    }
+
+    or<S>(rightOption: Option<S>): Option<T> | Option<S> {
+        if (true === this.isNone()) {
+            return rightOption;
+        }
+
+        return this;
+    }
+
+    orElse<S>(defaulter: OptionDefaulter<Option<S>>): Option<T> | Option<S> {
+        if (true === this.isNone()) {
+            return defaulter();
+        }
+
+        return this;
+    }
+}
 
 interface Parser<T> {
     (input: Input): Result<T>;
@@ -94,7 +183,5 @@ export {
     ErrKind_Map,
     Result,
     Option,
-    Some,
-    None,
     Parser
 };
