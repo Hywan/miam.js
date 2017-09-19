@@ -55,6 +55,13 @@ to provide a safe and relatively fast framework to build parsers.
      </td>
    </tr>
    <tr>
+     <td><code>opt</code></td>
+     <td>tries a parser</td>
+     <td>
+       <pre><code class="language-js">opt(tag("abc"))</code></pre>
+     </td>
+   </tr>
+   <tr>
      <td><code>regex</code></td>
      <td>consumes a given regular-expression based value</td>
      <td>
