@@ -96,6 +96,20 @@ to provide a safe and relatively fast framework to build parsers.
 )</code></pre>
      </td>
    </tr>
+   <tr>
+     <td><code>precede</code></td>
+     <td>consumes a prefix and a subject, returns the subject</td>
+     <td>
+       <pre><code class="language-js">terminate(tag("prefix"), tag("subject"))</code></pre>
+     </td>
+   </tr>
+   <tr>
+     <td><code>terminate</code></td>
+     <td>consumes a subject and a suffix, returns the subject</td>
+     <td>
+       <pre><code class="language-js">terminate(tag("subject"), tag("suffix"))</code></pre>
+     </td>
+   </tr>
   </tbody>
 </table>
 
