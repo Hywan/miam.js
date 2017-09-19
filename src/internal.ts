@@ -65,6 +65,17 @@ interface ErrKind_Map { kind: "map" }
 
 type Result<T> = Done<T> | Err;
 
+interface Some<T> {
+    kind: "some",
+    value: T
+}
+
+interface None {
+    kind: "none"
+}
+
+type Option<T> = Some<T> | None;
+
 interface Parser<T> {
     (input: Input): Result<T>;
 }
@@ -82,5 +93,8 @@ export {
     ErrKind_Regex,
     ErrKind_Map,
     Result,
+    Option,
+    Some,
+    None,
     Parser
 };
