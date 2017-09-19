@@ -187,6 +187,20 @@ function label_do<T>(labels: Labels<any>, fn: LabelsFn<T>): Parser<T> {
     };
 }
 
+function precede<T>(prefix: Parser<string>, subject: Parser<T>): Parser<T> {
+    return (input: Input): Result<T> => {
+        let prefixResult = prefix(input);
+
+        switch (prefixResult.kind) {
+            case "done":
+                return subject(prefixResult.input);
+
+            case "error":
+                return prefixResult;
+        }
+    };
+}
+
 
 export {
     tag,
@@ -195,5 +209,6 @@ export {
     opt,
     regex,
     map,
-    label_do
+    label_do,
+    precede
 };
