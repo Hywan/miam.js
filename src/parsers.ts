@@ -201,6 +201,30 @@ function precede<T>(prefix: Parser<string>, subject: Parser<T>): Parser<T> {
     };
 }
 
+function terminate<T>(subject: Parser<T>, suffix: Parser<string>): Parser<T> {
+    return (input: Input): Result<T> => {
+        let subjectResult = subject(input);
+
+        switch (subjectResult.kind) {
+            case "done":
+                let suffixResult = suffix(subjectResult.input);
+
+                if ("done" === suffixResult.kind) {
+                    return {
+                        kind: "done",
+                        input: suffixResult.input,
+                        output: subjectResult.output
+                    };
+                }
+
+                return suffixResult;
+
+            case "error":
+                return subjectResult;
+        }
+    };
+}
+
 
 export {
     tag,
@@ -210,5 +234,6 @@ export {
     regex,
     map,
     label_do,
-    precede
+    precede,
+    terminate
 };
