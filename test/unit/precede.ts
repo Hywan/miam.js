@@ -9,7 +9,7 @@ describe("Parser: precede", () => {
     });
 
     describe("parse", () => {
-        it("should consume `def` preceded by  `abc`", () => {
+        it("should consume `def` preceded by `abc`", () => {
             const def = precede(tag("abc"), tag("def"));
 
             assert.deepEqual(
@@ -22,7 +22,7 @@ describe("Parser: precede", () => {
             );
         });
 
-        it("should fail to consume `def` preceded by  `xyz`", () => {
+        it("should fail to consume `def` preceded by `xyz`", () => {
             const def = precede(tag("xyz"), tag("def"));
 
             assert.deepEqual(
