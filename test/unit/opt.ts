@@ -30,7 +30,7 @@ describe("Parser: opt", () => {
                 {
                     kind: "done",
                     input: input,
-                    output: new Option(null)
+                    output: new Option<string>()
                 }
             );
         });

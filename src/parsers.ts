@@ -87,7 +87,7 @@ function opt(parser: Parser<string>): Parser<Option<string>> {
                 return {
                     kind: "done",
                     input: input,
-                    output: new Option(null)
+                    output: new Option<string>()
                 };
         }
     };

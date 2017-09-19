@@ -73,8 +73,10 @@ interface OptionMapper<T, S> {
     (value: T): S
 }
 
+type Nullable<T> = T | null;
+
 class Option<T> {
-    constructor(private readonly value: T = null) { }
+    constructor(private readonly value: Nullable<T> = null) { }
 
     isSome(): boolean {
         return null !== this.value;
@@ -84,12 +86,12 @@ class Option<T> {
         return false === this.isSome();
     }
 
-    unwrapOr<S>(defaultValue: S): T | S {
+    unwrapOr<S>(defaultValue: S): Nullable<T> | S {
         if (true === this.isNone()) {
             return defaultValue;
         }
 
-        return this.value;
+        return <T>this.value;
     }
 
     unwrapOrElse<S>(defaulter: OptionDefaulter<S>): T | S {
@@ -97,15 +99,15 @@ class Option<T> {
             return defaulter();
         }
 
-        return this.value;
+        return <T>this.value;
     }
 
     map<S>(mapper: OptionMapper<T, S>): Option<S> {
         if (true === this.isNone()) {
-            return new Option(null);
+            return new Option();
         }
 
-        return new Option(mapper(this.value));
+        return new Option(mapper(<T>this.value));
     }
 
     mapOr<S>(mapper: OptionMapper<T, S>, defaultValue: S): Option<S> {
@@ -114,7 +116,7 @@ class Option<T> {
         if (true === this.isNone()) {
             value = defaultValue;
         } else {
-            value = mapper(this.value);
+            value = mapper(<T>this.value);
         }
 
         return new Option(value);
@@ -126,7 +128,7 @@ class Option<T> {
         if (true === this.isNone()) {
             value = defaulter();
         } else {
-            value = mapper(this.value);
+            value = mapper(<T>this.value);
         }
 
         return new Option(value);
@@ -134,7 +136,7 @@ class Option<T> {
 
     and<S>(rightOption: Option<S>): Option<S> {
         if (true === this.isNone()) {
-            return new Option(null);
+            return new Option<S>();
         }
 
         return rightOption;
@@ -142,10 +144,10 @@ class Option<T> {
 
     andThen<S>(then: OptionMapper<T, Option<S>>): Option<S> {
         if (true === this.isNone()) {
-            return new Option(null);
+            return new Option<S>();
         }
 
-        return then(this.value);
+        return then(<T>this.value);
     }
 
     or<S>(rightOption: Option<S>): Option<T> | Option<S> {
