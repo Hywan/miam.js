@@ -121,7 +121,6 @@ to provide a safe and relatively fast framework to build parsers.
     [],
     (accumulator: Array<string>, item: string) => {
         accumulator.push(item);
-
         return accumulator;
     },
     tag("abc")
