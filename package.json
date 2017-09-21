@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "prepublish": "tsc --project .",
-    "pretest": "tsc --pretty --module commonjs test/unit/*.ts",
+    "pretest": "tsc --pretty --noImplicitAny --strictNullChecks --module commonjs test/unit/*.ts",
     "test": "mocha test/unit/"
   },
   "repository": {
