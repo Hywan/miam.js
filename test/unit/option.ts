@@ -43,31 +43,31 @@ describe("Option", () => {
     });
 
     describe("map", () => {
-        const mapper = (value) => value.length;
+        const mapper = (value: string) => value.length;
 
         it("map some value", () => {
             assert.deepEqual(new Option("foo").map(mapper), new Option(3));
         });
 
         it("map none value", () => {
-            assert.deepEqual(new Option(null).map(mapper), new Option(null));
+            assert.deepEqual(new Option<string>(null).map(mapper), new Option<number>(null));
         });
     });
 
     describe("mapOr", () => {
-        const mapper = (value) => value.length;
+        const mapper = (value: string) => value.length;
 
         it("map some value", () => {
             assert.deepEqual(new Option("foo").mapOr(mapper, 42), new Option(3));
         });
 
         it("map none value", () => {
-            assert.deepEqual(new Option(null).mapOr(mapper, 42), new Option(42));
+            assert.deepEqual(new Option<string>(null).mapOr(mapper, 42), new Option(42));
         });
     });
 
     describe("mapOrElse", () => {
-        const mapper    = (value) => value.length;
+        const mapper    = (value: string) => value.length;
         const defaulter = () => 42;
 
         it("map some value", () => {
@@ -75,7 +75,7 @@ describe("Option", () => {
         });
 
         it("map none value", () => {
-            assert.deepEqual(new Option(null).mapOrElse(mapper, defaulter), new Option(42));
+            assert.deepEqual(new Option<string>(null).mapOrElse(mapper, defaulter), new Option(42));
         });
     });
 
@@ -85,19 +85,19 @@ describe("Option", () => {
         });
 
         it("conjunction with none value", () => {
-            assert.deepEqual(new Option(null).and(new Option("bar")), new Option(null));
+            assert.deepEqual(new Option<string>(null).and(new Option("bar")), new Option<string>(null));
         });
     });
 
     describe("andElse", () => {
-        const defaulter = (value) => new Option(value.length);
+        const defaulter = (value: string) => new Option(value.length);
 
         it("conjunction with some value", () => {
             assert.deepEqual(new Option("foo").andThen(defaulter), new Option(3));
         });
 
         it("conjunction with none value", () => {
-            assert.deepEqual(new Option(null).andThen(defaulter), new Option(null));
+            assert.deepEqual(new Option<string>(null).andThen(defaulter), new Option<number>(null));
         });
     });
 
