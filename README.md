@@ -111,6 +111,43 @@ to provide a safe and relatively fast framework to build parsers.
        <pre><code class="language-js">terminate(tag("subject"), tag("suffix"))</code></pre>
      </td>
    </tr>
+   <tr>
+     <td><code>fold_many_m_n</code></td>
+     <td>consumes a parser between `m` and `n` times, and fold each of them</td>
+     <td>
+       <pre><code class="language-js">fold_many_m_n(
+    1,
+    3,
+    [],
+    (accumulator: Array<string>, item: string) => {
+        accumulator.push(item);
+
+        return accumulator;
+    },
+    tag("abc")
+);</code></pre>
+     </td>
+   </tr>
+   <tr>
+     <td><code>fold_many_0</code></td>
+     <td>alias for `fold_many_m_n(0, Infinity, …, …)`</td>
+     <td></td>
+   </tr>
+   <tr>
+     <td><code>fold_many_1</code></td>
+     <td>alias for `fold_many_m_n(1, Infinity, …, …)`</td>
+     <td></td>
+   </tr>
+   <tr>
+     <td><code>many_0</code></td>
+     <td>alias for `fold_many_0([], …)` where the result is an array of all items</td>
+     <td></td>
+   </tr>
+   <tr>
+     <td><code>many_1</code></td>
+     <td>alias for `fold_many_1([], …)` where the result is an array of all items</td>
+     <td></td>
+   </tr>
   </tbody>
 </table>
 
