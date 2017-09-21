@@ -282,6 +282,38 @@ function fold_many_m_n<T, S>(m: number, n: number, init: T, folder: Folder<T, S>
     };
 }
 
+function fold_many_0<T, S>(init: T, folder: Folder<T, S>, parser: Parser<S>): Parser<T> {
+    return fold_many_m_n(0, Infinity, init, folder, parser);
+}
+
+function fold_many_1<T, S>(init: T, folder: Folder<T, S>, parser: Parser<S>): Parser<T> {
+    return fold_many_m_n(1, Infinity, init, folder, parser);
+}
+
+function many_0<T>(parser: Parser<T>): Parser<T[]> {
+    return fold_many_0(
+        [],
+        (accumulator: Array<T>, item: T) => {
+            accumulator.push(item);
+
+            return accumulator;
+        },
+        parser
+    );
+}
+
+function many_1<T>(parser: Parser<T>): Parser<T[]> {
+    return fold_many_0(
+        [],
+        (accumulator: Array<T>, item: T) => {
+            accumulator.push(item);
+
+            return accumulator;
+        },
+        parser
+    );
+}
+
 
 export {
     tag,
@@ -293,5 +325,9 @@ export {
     label_do,
     precede,
     terminate,
-    fold_many_m_n
+    fold_many_m_n,
+    fold_many_0,
+    fold_many_1,
+    many_0,
+    many_1
 };
