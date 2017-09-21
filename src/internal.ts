@@ -43,7 +43,7 @@ type Input = StringSlice;
 
 interface Done<T> {
     kind: "done",
-    input: Input;
+    input: Input,
     output: T
 }
 
@@ -56,12 +56,14 @@ type ErrKind =
     ErrKind_Tag
   | ErrKind_Alt
   | ErrKind_Regex
-  | ErrKind_Map;
+  | ErrKind_Map
+  | ErrKind_Fold;
 
 interface ErrKind_Tag { kind: "tag" }
 interface ErrKind_Alt { kind: "alt" }
 interface ErrKind_Regex { kind: "regex" }
 interface ErrKind_Map { kind: "map" }
+interface ErrKind_Fold { kind: "fold" }
 
 type Result<T> = Done<T> | Err;
 
@@ -183,6 +185,7 @@ export {
     ErrKind_Alt,
     ErrKind_Regex,
     ErrKind_Map,
+    ErrKind_Fold,
     Result,
     Option,
     Parser

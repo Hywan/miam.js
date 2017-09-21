@@ -225,6 +225,63 @@ function terminate<T, S>(subject: Parser<T>, suffix: Parser<S>): Parser<T> {
     };
 }
 
+interface Folder<T, S> {
+    (accumulator: T, item: S): T
+}
+
+function fold_many_m_n<T, S>(m: number, n: number, init: T, folder: Folder<T, S>, parser: Parser<S>): Parser<T> {
+    if (m >= n) {
+        throw new RangeError("m (" + m + ") must be greater than n (" + n + ").");
+    }
+
+    if (m < 0) {
+        throw new RangeError("m (" + m + ") must be greater than or equal to 0.");
+    }
+
+    return (input: Input): Result<T> => {
+        for (let i = 1; i < m; ++i) {
+            let result = parser(input);
+
+            switch (result.kind) {
+                case "done":
+                    input = result.input;
+
+                    break;
+
+                case "error":
+                    return result;
+            }
+        }
+
+        let output = init;
+
+        for (; m <= n; ++m) {
+            let result = parser(input);
+
+            switch (result.kind) {
+                case "done":
+                    input  = result.input;
+                    output = folder(output, result.output);
+
+                    break;
+
+                case "error":
+                    return {
+                        kind: "done",
+                        input: input,
+                        output: output
+                    };
+            }
+        }
+
+        return {
+            kind: "done",
+            input: input,
+            output: output
+        };
+    };
+}
+
 
 export {
     tag,
@@ -235,5 +292,6 @@ export {
     map,
     label_do,
     precede,
-    terminate
+    terminate,
+    fold_many_m_n
 };
