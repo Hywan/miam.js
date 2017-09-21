@@ -155,5 +155,28 @@ describe("Parser: fold_many_m_n", () => {
                 }
             );
         });
+
+        it("should consume `abc` between 1 and Infinity times", () => {
+            const many = fold_many_m_n(
+                1,
+                Infinity,
+                [],
+                (accumulator: Array<string>, item: string) => {
+                    accumulator.push(item);
+
+                    return accumulator;
+                },
+                tag("abc")
+            );
+
+            assert.deepEqual(
+                many(input),
+                {
+                    kind: "done",
+                    input: input.splitsAt(12),
+                    output: ["abc", "abc", "abc", "abc"]
+                }
+            );
+        });
     });
 });
