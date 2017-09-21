@@ -113,7 +113,7 @@ to provide a safe and relatively fast framework to build parsers.
    </tr>
    <tr>
      <td><code>fold_many_m_n</code></td>
-     <td>consumes a parser between `m` and `n` times, and fold each of them</td>
+     <td>consumes a parser between <code>m</code> and <code>n</code> times, and fold each of them</td>
      <td>
        <pre><code class="language-js">fold_many_m_n(
     1,
@@ -129,22 +129,22 @@ to provide a safe and relatively fast framework to build parsers.
    </tr>
    <tr>
      <td><code>fold_many_0</code></td>
-     <td>alias for `fold_many_m_n(0, Infinity, …, …)`</td>
+     <td>alias for <code>fold_many_m_n(0, Infinity, …, …)</code></td>
      <td></td>
    </tr>
    <tr>
      <td><code>fold_many_1</code></td>
-     <td>alias for `fold_many_m_n(1, Infinity, …, …)`</td>
+     <td>alias for <code>fold_many_m_n(1, Infinity, …, …)</code></td>
      <td></td>
    </tr>
    <tr>
      <td><code>many_0</code></td>
-     <td>alias for `fold_many_0([], …)` where the result is an array of all items</td>
+     <td>alias for <code>fold_many_0([], …)</code> where the result is an array of all items</td>
      <td></td>
    </tr>
    <tr>
      <td><code>many_1</code></td>
-     <td>alias for `fold_many_1([], …)` where the result is an array of all items</td>
+     <td>alias for <code>fold_many_1([], …)</code> where the result is an array of all items</td>
      <td></td>
    </tr>
   </tbody>
