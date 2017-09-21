@@ -1,4 +1,4 @@
-import { Borrow, StringSlice, tag, fold_many_m_n } from "../../src/index";
+import { Borrow, StringSlice, tag, fold_many_m_n, fold_many_0, fold_many_1, many_0, many_1 } from "../../src/index";
 import { assert } from "chai";
 
 describe("Parser: fold_many_m_n", () => {
@@ -177,6 +177,42 @@ describe("Parser: fold_many_m_n", () => {
                     output: ["abc", "abc", "abc", "abc"]
                 }
             );
+        });
+    });
+
+    describe("parse with fold_many_0 and many_0", () => {
+        it("should consume `abc` between 0 and Infinity times", () => {
+            const fmany0 = fold_many_0(
+                [],
+                (accumulator: Array<string>, item: string) => {
+                    accumulator.push(item);
+
+                    return accumulator;
+                },
+                tag("abc")
+            );
+
+            const many0 = many_0(tag("abc"));
+
+            assert.deepEqual(fmany0(input), many0(input));
+        });
+    });
+
+    describe("parse with fold_many_1 and many_1", () => {
+        it("should consume `abc` between 1 and Infinity times", () => {
+            const fmany1 = fold_many_1(
+                [],
+                (accumulator: Array<string>, item: string) => {
+                    accumulator.push(item);
+
+                    return accumulator;
+                },
+                tag("abc")
+            );
+
+            const many1 = many_1(tag("abc"));
+
+            assert.deepEqual(fmany1(input), many1(input));
         });
     });
 });
