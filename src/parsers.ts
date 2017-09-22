@@ -150,18 +150,18 @@ interface Labels<T> {
     [label: string]: Parser<T>;
 }
 
-interface LabelOutputs {
-    [label: string]: any;
+type LabelOutputs<T> = {
+    [P in keyof Labels<T>]: any;
 }
 
-interface LabelsFn<T> {
-    (labels: LabelOutputs): T
+interface LabelsFn<T, S> {
+    (labels: LabelOutputs<S>): T
 }
 
-function label_do<T>(labels: Labels<any>, fn: LabelsFn<T>): Parser<T> {
+function label_do<T>(labels: Labels<any>, fn: LabelsFn<T, any>): Parser<T> {
     return (input: Input): Result<T> => {
         let result;
-        let labelledValues: LabelOutputs = {};
+        let labelledValues: LabelOutputs<any> = {};
 
         for (let labelName in labels) {
             let labelParser = labels[labelName];
