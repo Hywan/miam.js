@@ -140,12 +140,16 @@ to provide a safe and relatively fast framework to build parsers.
    <tr>
      <td><code>many_0</code></td>
      <td>alias for <code>fold_many_0([], …)</code> where the result is an array of all items</td>
-     <td></td>
+     <td>
+       <pre><code class="language-js">many_0(tag("abc"))</code></pre>
+     </td>
    </tr>
    <tr>
      <td><code>many_1</code></td>
      <td>alias for <code>fold_many_1([], …)</code> where the result is an array of all items</td>
-     <td></td>
+     <td>
+       <pre><code class="language-js">many_1(tag("abc"))</code></pre>
+     </td>
    </tr>
   </tbody>
 </table>
