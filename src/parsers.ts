@@ -1,4 +1,4 @@
-import { Input, Parser, Result, Option } from "./internal";
+import { Input, Parser, Result, Option, Nullable } from "./internal";
 
 function tag(tag: string): Parser<string> {
     return (input: Input): Result<string> => {
@@ -314,6 +314,16 @@ function many_1<T>(parser: Parser<T>): Parser<T[]> {
     );
 }
 
+interface Definition<T> {
+    (): Parser<T>
+}
+
+function rule<T>(definition: Definition<T>) {
+    return (input: Input): Result<T> => {
+        return definition()(input);
+    };
+}
+
 
 export {
     tag,
@@ -329,5 +339,6 @@ export {
     fold_many_0,
     fold_many_1,
     many_0,
-    many_1
+    many_1,
+    rule
 };

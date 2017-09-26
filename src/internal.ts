@@ -187,6 +187,7 @@ export {
     ErrKind_Map,
     ErrKind_Fold,
     Result,
+    Nullable,
     Option,
     Parser
 };
