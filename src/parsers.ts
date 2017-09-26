@@ -1,4 +1,4 @@
-import { Input, Parser, Result, Option, Nullable } from "./internal";
+import { Input, Parser, Result, Option } from "./internal";
 
 function tag(tag: string): Parser<string> {
     return (input: Input): Result<string> => {
