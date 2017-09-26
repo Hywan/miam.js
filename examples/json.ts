@@ -72,7 +72,7 @@ const input = (input: string) => {
     return new StringSlice(new Borrow(input));
 };
 
-const data = [
+[
     "true",
     "false",
     "null",
@@ -82,10 +82,4 @@ const data = [
     "[1,2,3]",
     "[true,[1,2],\"false\"]",
     "{\"foo\":7,\"bar\":[4,2]}"
-];
-
-data.forEach(
-    (datum) => {
-        console.log(jValue(input(datum)));
-    }
-);
+].forEach((datum) => console.log(jValue(input(datum))));
