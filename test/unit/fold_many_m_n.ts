@@ -41,7 +41,7 @@ describe("Parser: fold_many_m_n", () => {
             });
         });
 
-        it("should consume `xyz` between 0 and 2 times", () => {
+        it("should consume `def` between 0 and 2 times", () => {
             const many = fold_many_m_n(
                 0,
                 2,
