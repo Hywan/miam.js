@@ -4,9 +4,10 @@
   "description": "miam.js is a parser combinator framework written in TypeScript",
   "main": "dist/index.js",
   "scripts": {
-    "prepublish": "tsc --project .",
-    "pretest": "tsc --pretty --noImplicitAny --strictNullChecks --module commonjs test/unit/*.ts",
-    "test": "mocha test/unit/"
+    "prepublish": "tsc --target ES6 --project .",
+    "pretest": "tsc --target ES6 --pretty --noImplicitAny --strictNullChecks --module commonjs test/unit/*.ts",
+    "test": "mocha test/unit/",
+    "preexample": "tsc --target ES6 --pretty --strictNullChecks --module commonjs examples/*.ts"
   },
   "repository": {
     "type": "git",
