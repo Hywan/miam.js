@@ -14,13 +14,7 @@ const jPair = rule<any>(() =>
             key: jString,
             value: precede(tag(":"), jValue)
         },
-        ({key, value}) => {
-            let output: any = {};
-
-            output[key] = value;
-
-            return output;
-        }
+        ({key, value}) => { return {[key]: value}; }
     )
 );
 
